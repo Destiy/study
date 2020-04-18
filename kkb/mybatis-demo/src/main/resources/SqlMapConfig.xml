@@ -1,0 +1,16 @@
+<configuration>
+    <environments default="dev">
+        <environment id="dev">
+            <dataSource type="DBCP">
+                <preperty name="driver" value="com.mysql.jdbc.Driver"/>
+                <preperty name="url" value="jdbc:mysql:///ssm"/>
+                <preperty name="username" value="root"/>
+                <preperty name="password" value="admin"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+</configuration>

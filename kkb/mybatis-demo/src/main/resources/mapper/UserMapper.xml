@@ -1,0 +1,7 @@
+<mapper namesapce="test">
+
+    <select id = "findUserById" parameterType = "com.matree.mybatis.po.User"
+            resultType = "com.matree.mybatis.po.User" statementType="prepared">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+</mapper>
