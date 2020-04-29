@@ -11,6 +11,7 @@
     <modules>
         <module>kkb</module>
         <module>j8a</module>
+        <module>jvm</module>
     </modules>
 
     <dependencies>

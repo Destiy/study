@@ -54,11 +54,14 @@ public class XMLConfigParser {
             Element propertyEle = (Element) o;
             String name = propertyEle.attributeValue("name");
             String value = propertyEle.attributeValue("value");
+
+            property.setProperty(name, value);
         }
 
         DataSource dataSource = null;
         if (type.equals("DBCP")) {
-            new BasicDataSource();
+             dataSource = new BasicDataSource();
+             dataSource.set
         }
     }
 }
