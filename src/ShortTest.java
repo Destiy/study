@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 public class ShortTest {
 
     public static void main(String[] args) {
