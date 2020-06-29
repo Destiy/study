@@ -44,24 +44,24 @@ public class XMLConfigParser {
     }
 
     private void parseDataSource(Element element) {
-        String type = element.attributeValue("type");
-        if (type != null && type.equals("")) {
-            type = "DBCP";
-        }
-
-        List property = element.elements("property");
-        for (Object o : property) {
-            Element propertyEle = (Element) o;
-            String name = propertyEle.attributeValue("name");
-            String value = propertyEle.attributeValue("value");
-
-            property.setProperty(name, value);
-        }
-
-        DataSource dataSource = null;
-        if (type.equals("DBCP")) {
-             dataSource = new BasicDataSource();
-             dataSource.set
-        }
+//        String type = element.attributeValue("type");
+//        if (type != null && type.equals("")) {
+//            type = "DBCP";
+//        }
+//
+//        List property = element.elements("property");
+//        for (Object o : property) {
+//            Element propertyEle = (Element) o;
+//            String name = propertyEle.attributeValue("name");
+//            String value = propertyEle.attributeValue("value");
+//
+//            property.setProperty(name, value);
+//        }
+//
+//        DataSource dataSource = null;
+//        if (type.equals("DBCP")) {
+//             dataSource = new BasicDataSource();
+//             dataSource.set
+//        }
     }
 }

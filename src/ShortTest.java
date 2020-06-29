@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
+
 public class ShortTest {
 
     public static void main(String[] args) {
@@ -5,12 +8,10 @@ public class ShortTest {
 ////        s1 = s1 + 1;
 //        s1 += 1;
 
-        String a = "hellow2";
-        final String b = "hellow";
-        String c = "hellow";
-        String d = b + 2;
-        String e = c + 2;
-        System.out.println(a == d);
-        System.out.println(a == e);
+        int a=0;
+        System.out.println(a++);
+        Integer n = null,m = null;
+        System.out.println(n != m);
+
     }
 }
