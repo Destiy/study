@@ -1,114 +1,125 @@
 package interview.I0628;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.regex.PatternSyntaxException;
 
 /**
- * 请完成一个简单的算法编程。
- * 输入一个字符串s，我们可以删除字符串s中的任意字符，让剩下
- * 的字符串形成一个对称字符串，且该字符串为最长对称字符串。如：
- * 输入google，则找到最长对称字符串为goog；如输入abcda则能找
- * 到3个最长对称字符串为aba/aca/ada。 若最长对称字符串存在多个，
- * 则输出多个相同长度的最长对称字符串，且字符串中不包含特殊字符。
- *
  * @author wy
- * @data 2020-06-28 20:58
  */
 public class Test1 {
-    private static List<StringBuffer> result = new LinkedList<>();
-    private static Set<Character> set;
+    /**
+     * 结果集
+     */
+    private static Set<String> result;
 
     public static void main(String[] args) {
-        String str = "abcda";
-        set = new HashSet<>(str.length());
+        // 输出最长对称字符串：goog
+        String input1 = "google";
+
+        // 输出3个最长对称字符串：aba/aca/ada
+        String input2 = "abcda";
+
+        // 输出2个最长对称字符串：pop/upu，不会输出特殊字符的对称字符串p-p
+        String input3 = "pop-upu";
+
+        String s = StringFilter(input3);
+        result = new HashSet<>(s.length());
         Test1 test1 = new Test1();
-        StringBuilder sb = new StringBuilder(str);
-        test1.getLCS(str, sb.reverse().toString());
-        result.forEach(x -> System.out.println(x + ""));
+
+        StringBuilder sb = new StringBuilder(s);
+        test1.getLCS(s, sb.reverse().toString());
+        result.forEach(x -> System.out.print(x + " "));
     }
 
+    /**
+     * lcs 遍历
+     *
+     * @param str   字符串
+     * @param reStr 反转字符串
+     */
     public void getLCS(String str, String reStr) {
-        int[][] a = new int[str.length() + 1][reStr.length() + 1];
-        char[][] b = new char[str.length() + 1][reStr.length() + 1];
+        int[][] dp = new int[str.length() + 1][reStr.length() + 1];
+        char[][] map = new char[str.length() + 1][reStr.length() + 1];
 
         for (int i = 0; i <= str.length(); i++) {
-            a[i][0] = 0;
+            dp[i][0] = 0;
         }
         for (int j = 0; j <= reStr.length(); j++) {
-            a[0][j] = 0;
+            dp[0][j] = 0;
         }
 
+        // x-斜对角 h-上&左 l-左 u-上
         for (int i = 1; i <= str.length(); i++) {
             for (int j = 1; j <= reStr.length(); j++) {
+                // 特判特殊字符处理
+                if (str.charAt(i - 1) == '-') {
+                    continue;
+                }
                 if (str.charAt(i - 1) == reStr.charAt(j - 1)) {
-                    a[i][j] = a[i - 1][j - 1] + 1;
-                    b[i][j] = 'x';
-                } else if (a[i - 1][j] >= a[i][j - 1]) {
-                    a[i][j] = a[i - 1][j];
-                    b[i][j] = 'h';
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                    map[i][j] = 'x';
+                } else if (dp[i - 1][j] == dp[i][j - 1]) {
+                    dp[i][j] = dp[i - 1][j];
+                    map[i][j] = 'h';
+                } else if (dp[i - 1][j] > dp[i][j - 1]) {
+                    dp[i][j] = dp[i - 1][j];
+                    map[i][j] = 'l';
                 } else {
-                    a[i][j] = a[i][j - 1];
-                    b[i][j] = 'w';
+                    dp[i][j] = dp[i][j - 1];
+                    map[i][j] = 'u';
                 }
             }
         }
-        printLcs(b, str, str.length(), reStr.length(), false);
-//        String res = "";
-//        while(!stack.empty()) {
-//            res += stack.pop().toString();
-//        }
-//        result.add(res);
+        // 处理特殊符号分割字符
+        Set<Integer> integers = new HashSet<>();
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '-') {
+                integers.add(i);
+            }
+        }
+        integers.add(str.length());
+        for (Integer integer : integers) {
+            findLCS(map, str, integer, reStr.length(), "");
+        }
     }
 
-    private Stack<Character> stack = new Stack<Character>();
+    /**
+     * 过滤特殊字符
+     *
+     * @param str 带过滤字符串
+     * @return 过滤后的带 ‘-’ 占位，字符串
+     */
+    public static String StringFilter(String str) {
+        // 清除掉所有特殊字符, 使用 '-' 占位
+        String s = str.replaceAll("[^0-9a-zA-Z\u4e00-\u9fa5.，,。？“”]+", "-");
+        return s.replaceAll("[-]+", "-");
 
-    private void printLcs(char b[][], String str, int i, int j, boolean flag) {
+        // TODO 如果特殊符号可以忽略，注释上面两行，使用下面正则过滤
+//        return str.replaceAll("[^0-9a-zA-Z\u4e00-\u9fa5.，,。？“”]+", "");
+    }
+
+    /**
+     * 遍历所有路径
+     *
+     * @param map 图
+     * @param str 字符串
+     * @param i   x轴
+     * @param j   y轴
+     * @param res 路径
+     */
+    private void findLCS(char[][] map, String str, int i, int j, String res) {
         if (i == 0 || j == 0) {
-
-        } else if (b[i][j] == 'x') {
-            char c = str.charAt(i - 1);
-//            stack.push();
-            if (flag && set.size() > 0) {
-                StringBuffer s = result.get(0);
-                set.forEach(x -> result.add(s.append(x)));
-            } else if (result.size() == 0) {
-                result.add(new StringBuffer(c + ""));
-            } else result.forEach(res -> res.append(c));
-            printLcs(b, str, i - 1, j - 1, false);
-        } else if (b[i][j] == 'h') {
-            set.add(str.charAt(i - 1));
-            printLcs(b, str, i - 1, j, true);
+            result.add(res);
+        } else if (map[i][j] == 'x') {
+            findLCS(map, str, i - 1, j - 1, res + str.charAt(i - 1));
+        } else if (map[i][j] == 'h') {
+            findLCS(map, str, i - 1, j, res);
+            findLCS(map, str, i, j - 1, res);
+        } else if (map[i][j] == 'l') {
+            findLCS(map, str, i - 1, j, res);
         } else {
-            set.add(str.charAt(i - 1));
-            printLcs(b, str, i, j - 1, true);
+            findLCS(map, str, i, j - 1, res);
         }
-    }
-
-
-    /*    private void printLcs2(char b[][], String str, int i, int j) {
-            if (i == 0 || j == 0) {
-            } else if (b[i][j] == 'x') {
-                stack.push(str.charAt(i - 1));
-                printLcs(b, str, i - 1, j - 1);
-            } else if (b[i][j] == 'h') {
-                printLcs(b, str, i - 1, j);
-            } else {
-                printLcs(b, str, i, j - 1);
-            }
-        }*/
-    public int compare(int left, int right, int max, String str) {
-        int len = str.length();
-        int clen = 0;
-
-        int l = left, r = right;
-        while (l <= r) {
-            if (str.charAt(l) == str.charAt(r)) {
-                clen++;
-                l--;
-                r--;
-            } else {
-                r--;
-            }
-        }
-        return clen > max ? clen : max;
     }
 }
