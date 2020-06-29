@@ -12,6 +12,8 @@
         <module>kkb</module>
         <module>j8a</module>
         <module>jvm</module>
+        <module>Interview</module>
+        <module>netty</module>
     </modules>
 
     <dependencies>
