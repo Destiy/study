@@ -5,6 +5,9 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class NIOClient {
 
@@ -33,5 +36,9 @@ public class NIOClient {
         System.out.println(new String(content));
         scanner.close();
         socketChannel.close();
+
+
+        ExecutorService executorService = Executors.newFixedThreadPool(6);
+
     }
 }
