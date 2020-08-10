@@ -1,4 +1,4 @@
-package com.matree.io.bio.nio;
+package com.matree.io.nio;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
