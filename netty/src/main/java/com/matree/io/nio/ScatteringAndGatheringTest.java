@@ -1,4 +1,4 @@
-package com.matree.io.bio.nio;
+package com.matree.io.nio;
 
 import java.net.InetSocketAddress;
 import java.nio.Buffer;
