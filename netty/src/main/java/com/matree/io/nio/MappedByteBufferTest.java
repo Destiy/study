@@ -12,25 +12,25 @@ import java.nio.channels.FileChannel;
  */
 public class MappedByteBufferTest {
 
-    public static void main(String[] args) throws Exception {
+        public static void main(String[] args) throws Exception {
 
-        RandomAccessFile randomAccessFile = new RandomAccessFile("E:\\test\\0708.txt", "rw");
-        FileChannel channel = randomAccessFile.getChannel();
+            RandomAccessFile randomAccessFile = new RandomAccessFile("E:\\test\\0708.txt", "rw");
+            FileChannel channel = randomAccessFile.getChannel();
 
 
-        /**
-         * 参数1：FileChannel.MapMode.READ_WRITE： 读写模式
-         * 参数2： 0：  起始位置
-         * 参数3： 5：  映射到内存的大小，可以修改的范围就是0-5
-         *
-         * 实际类型 DirectByteBuffer
-         */
-        MappedByteBuffer map = channel.map(FileChannel.MapMode.READ_WRITE, 0, 5);
+            /**
+             * 参数1：FileChannel.MapMode.READ_WRITE： 读写模式
+             * 参数2： 0：  起始位置
+             * 参数3： 5：  映射到内存的大小，可以修改的范围就是0-5
+             *
+             * 实际类型 DirectByteBuffer
+             */
+            MappedByteBuffer map = channel.map(FileChannel.MapMode.READ_WRITE, 0, 5);
 
-        map.put(0, (byte) 'w');
-        map.put(1, (byte) 'y');
+            map.put(0, (byte) 'w');
+            map.put(1, (byte) 'y');
 
-        randomAccessFile.close();
-        System.out.println("modify final");
-    }
+            randomAccessFile.close();
+            System.out.println("modify final");
+        }
 }
