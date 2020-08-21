@@ -15,6 +15,7 @@
         <module>Interview</module>
         <module>netty</module>
         <module>juc</module>
+        <module>rocketmq</module>
     </modules>
 
     <dependencies>
