@@ -26,6 +26,23 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
         System.out.println("server ctx = " + ctx);
 
+        // taskQueue 异步操作
+        ctx.channel().eventLoop().execute(() -> {
+            try {
+                Thread.sleep(5000);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端2.", CharsetUtil.UTF_8));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        ctx.channel().eventLoop().execute(() -> {
+            try {
+                Thread.sleep(10000);
+                ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端3.", CharsetUtil.UTF_8));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
         // 转成byteBuf
         ByteBuf byteBuf = (ByteBuf) msg;
         System.out.println("客户端发送的数据是：" + byteBuf.toString(CharsetUtil.UTF_8));
