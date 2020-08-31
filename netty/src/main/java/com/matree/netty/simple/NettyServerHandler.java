@@ -2,7 +2,6 @@ package com.matree.netty.simple;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
@@ -17,8 +16,9 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 读取数据 （可以读取客户端发送的数据）
-     * @param ctx   上下文对象，含有 管道pipeline 通道channel 地址
-     * @param msg   客户端发送的消息
+     *
+     * @param ctx 上下文对象，含有 管道pipeline 通道channel 地址
+     * @param msg 客户端发送的消息
      * @throws Exception
      */
     @Override
@@ -35,7 +35,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     /**
      * 数据读取完毕
      *
-     * @param ctx   上下文对象
+     * @param ctx 上下文对象
      * @throws Exception
      */
     @Override

@@ -25,11 +25,16 @@ public class NettyServer {
         ServerBootstrap bootstrap = new ServerBootstrap();
 
         try {
-            bootstrap.group(bossGroup, workGroup) // 设置两个线程组
-                    .channel(NioServerSocketChannel.class)  // 使用NioServerSocketChannel 的通道实现
-                    .option(ChannelOption.SO_BACKLOG, 128)  /* 线程队列等待个数*/
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)  // 设置保持会话连接状态
-                    .childHandler(new ChannelInitializer<SocketChannel>() { // 创建一个通道测试对象
+            // 设置两个线程组
+            bootstrap.group(bossGroup, workGroup)
+                    // 使用NioServerSocketChannel 的通道实现
+                    .channel(NioServerSocketChannel.class)
+                    /* 线程队列等待个数*/
+                    .option(ChannelOption.SO_BACKLOG, 128)
+                    // 设置保持会话连接状态
+                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    // 创建一个通道测试对象
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
                         // 给pipeline 设置处理器
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
