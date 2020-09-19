@@ -43,7 +43,7 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
                 return;
             }
             // 回复信息给浏览器 [http协议]
-            ByteBuf content = Unpooled.copiedBuffer("hello 我是服务器", CharsetUtil.UTF_16);
+            ByteBuf content = Unpooled.copiedBuffer("he llo 我是服务器", CharsetUtil.UTF_16);
             // 构造一个http响应，即HttpResponse
             FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK,
                     content);
@@ -53,26 +53,3 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
