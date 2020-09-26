@@ -2,6 +2,7 @@ package com.matree.netty.simple;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
@@ -25,9 +26,9 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         System.out.println("server ctx = " + ctx);
-
+        Channel channel = ctx.channel();
         // taskQueue 异步操作
-        ctx.channel().eventLoop().execute(() -> {
+        channel.eventLoop().execute(() -> {
             try {
                 Thread.sleep(5000);
                 ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端2.", CharsetUtil.UTF_8));
@@ -35,7 +36,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
                 e.printStackTrace();
             }
         });
-        ctx.channel().eventLoop().execute(() -> {
+        channel.eventLoop().execute(() -> {
             try {
                 Thread.sleep(10000);
                 ctx.writeAndFlush(Unpooled.copiedBuffer("hello,客户端3.", CharsetUtil.UTF_8));
@@ -46,7 +47,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         // 转成byteBuf
         ByteBuf byteBuf = (ByteBuf) msg;
         System.out.println("客户端发送的数据是：" + byteBuf.toString(CharsetUtil.UTF_8));
-        System.out.println("客户端地址：" + ctx.channel().remoteAddress());
+        System.out.println("客户端地址：" + channel.remoteAddress());
     }
 
     /**
