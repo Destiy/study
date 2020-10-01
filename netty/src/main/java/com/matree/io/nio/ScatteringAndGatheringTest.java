@@ -28,7 +28,7 @@ public class ScatteringAndGatheringTest {
         // 绑定端口到server 并启动
         serverSocketChannel.socket().bind(inetSocketAddress);
 
-        ByteBuffer[] byteBuffers = new ByteBuffer[2];
+        ByteBuffer[]     byteBuffers = new ByteBuffer[2];
         byteBuffers[0] = ByteBuffer.allocate(5);
         byteBuffers[1] = ByteBuffer.allocate(3);
 
@@ -43,7 +43,7 @@ public class ScatteringAndGatheringTest {
                 long l = socketChannel.read(byteBuffers);
                 byteRead += l;
                 System.out.println("byteRead = " + byteRead);
-                // 输出Buffer 的limit 和 posstion
+                // 输出Buffer 的limit 和 position
                 Arrays.stream(byteBuffers).map(buffer -> "position = " + buffer.position() +
                         ", limit = " + buffer.limit()).forEach(System.out::println);
             }
