@@ -1,4 +1,4 @@
-package com.matree.io.bio.bio;
+package com.matree.io.bio;
 
 import java.io.IOException;
 import java.io.InputStream;
