@@ -3,17 +3,17 @@ package decorate.starbuzz.drink;
 import decorate.starbuzz.decorator.Beverage;
 
 /**
- * 浓缩咖啡
+ * 低因咖啡
  *
  * @author wy
  */
-public class Espresso extends Beverage {
-    public Espresso() {
-        super.description = "Espresso";
+public class Decaf extends Beverage {
+    public Decaf() {
+        super.description = "Decaf Coffee";
     }
 
     @Override
     public double cost() {
-        return 1.99;
+        return 1.05;
     }
 }
