@@ -1,10 +1,7 @@
-package factory.pizza;
-
-import factory.pizza.factory.Pizza;
-import factory.pizza.factory.SimplePizzaFactory;
+package factory.pizza.factory;
 
 public class PizzaStore {
-    private SimplePizzaFactory factory;
+    private final SimplePizzaFactory factory;
 
     public PizzaStore(SimplePizzaFactory factory) {
         this.factory = factory;
@@ -15,6 +12,7 @@ public class PizzaStore {
 
         pizza.prepare();
         pizza.bake();
+        pizza.cut();
         pizza.box();
 
         return pizza;

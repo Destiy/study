@@ -1,9 +1,5 @@
 package factory.pizza.factory;
 
-import factory.pizza.CheesePizza;
-import factory.pizza.ClamPizza;
-import factory.pizza.VeggiePizza;
-
 /**
  * 工厂
  * @author wy

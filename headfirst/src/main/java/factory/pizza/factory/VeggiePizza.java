@@ -1,8 +1,6 @@
-package factory.pizza;
+package factory.pizza.factory;
 
-import factory.pizza.factory.Pizza;
-
-public class CheesePizza implements Pizza {
+public class VeggiePizza implements Pizza {
     @Override
     public void prepare() {
 
