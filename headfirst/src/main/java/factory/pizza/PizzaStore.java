@@ -1,4 +1,4 @@
-package factory.pizza.factory;
+package factory.pizza;
 
 public class PizzaStore {
     private final SimplePizzaFactory factory;

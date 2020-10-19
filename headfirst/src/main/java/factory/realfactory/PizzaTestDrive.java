@@ -1,7 +1,7 @@
-package factory.pizza.realfactory;
+package factory.realfactory;
 
-import factory.pizza.realfactory.chicago.ChicagoPizzaStore;
-import factory.pizza.realfactory.newyork.NYPizzaStore;
+import factory.realfactory.chicago.ChicagoPizzaStore;
+import factory.realfactory.newyork.NYPizzaStore;
 
 public class PizzaTestDrive {
     public static void main(String[] args) {

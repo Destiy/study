@@ -1,4 +1,4 @@
-package factory.pizza.factory;
+package factory.pizza;
 
 /**
  * 工厂

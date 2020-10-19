@@ -1,7 +1,7 @@
-package factory.pizza.realfactory.chicago;
+package factory.realfactory.chicago;
 
 
-import factory.pizza.realfactory.Pizza;
+import factory.realfactory.Pizza;
 
 public class ChicagoStyleCheesePizza extends Pizza {
     public ChicagoStyleCheesePizza() {

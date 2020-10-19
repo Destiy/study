@@ -1,4 +1,4 @@
-package factory.pizza.realfactory;
+package factory.realfactory;
 
 
 public abstract class PizzaStore {

@@ -1,4 +1,4 @@
-package factory.pizza.factory;
+package factory.pizza;
 
 public class ClamPizza implements Pizza {
     @Override
