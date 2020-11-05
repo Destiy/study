@@ -1,0 +1,22 @@
+package command.remote.command.impl;
+
+import command.remote.command.Command;
+import command.remote.command.GarageDoor;
+
+public class GarageDoorDownCommand implements Command {
+    private GarageDoor garageDoor;
+
+    public GarageDoorDownCommand(GarageDoor garageDoor) {
+        this.garageDoor = garageDoor;
+    }
+
+    @Override
+    public void execute() {
+        garageDoor.down();
+    }
+
+    @Override
+    public void undo() {
+        garageDoor.up();
+    }
+}

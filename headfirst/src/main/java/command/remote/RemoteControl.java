@@ -1,10 +1,14 @@
 package command.remote;
 
+import command.remote.command.Command;
+import command.remote.command.impl.NoCommand;
+
 import java.util.Arrays;
 
 public class RemoteControl {
     private Command[] onCommands;
     private Command[] offCommands;
+    private Command undoCommand;
 
     public RemoteControl() {
         onCommands = new Command[7];
@@ -15,6 +19,7 @@ public class RemoteControl {
             onCommands[i] = noCommand;
             offCommands[i] = noCommand;
         }
+        undoCommand = noCommand;
     }
 
     public void setCommand(int slot, Command onCommand, Command offCommand) {
@@ -22,14 +27,19 @@ public class RemoteControl {
         this.offCommands[slot] = offCommand;
     }
 
-    public void onButtonWasPressed(int slot){
+    public void onButtonWasPressed(int slot) {
         this.onCommands[slot].execute();
+        this.undoCommand = onCommands[slot];
     }
 
     public void offButtonWasPressed(int slot) {
         this.offCommands[slot].execute();
+        this.undoCommand = onCommands[slot];
     }
 
+    public void undoButtonWasPressed() {
+        undoCommand.undo();
+    }
     @Override
     public String toString() {
         System.out.println("------------ remote control -----------\n");

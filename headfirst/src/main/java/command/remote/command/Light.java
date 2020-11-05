@@ -1,4 +1,4 @@
-package command.remote;
+package command.remote.command;
 
 public class Light {
     String location = "";

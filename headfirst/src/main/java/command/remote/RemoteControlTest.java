@@ -1,6 +1,9 @@
 package command.remote;
 
-import java.util.GregorianCalendar;
+import command.remote.command.GarageDoor;
+import command.remote.command.Light;
+import command.remote.command.impl.GarageDoorUpCommand;
+import command.remote.command.impl.LightOnCommand;
 
 public class RemoteControlTest {
     public static void main(String[] args) {
@@ -11,8 +14,8 @@ public class RemoteControlTest {
         simpleRemoteControl.setSlot(lightOnCommand);
         simpleRemoteControl.buttonWasPressed();
 
-        GarageDoorOpenCommand garageDoorOpenCommand = new GarageDoorOpenCommand(new GarageDoor(""));
-        simpleRemoteControl.setSlot(garageDoorOpenCommand);
+        GarageDoorUpCommand garageDoorUpCommand = new GarageDoorUpCommand(new GarageDoor(""));
+        simpleRemoteControl.setSlot(garageDoorUpCommand);
         simpleRemoteControl.buttonWasPressed();
     }
 }

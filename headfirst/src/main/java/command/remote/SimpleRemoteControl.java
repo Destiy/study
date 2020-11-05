@@ -1,5 +1,7 @@
 package command.remote;
 
+import command.remote.command.Command;
+
 public class SimpleRemoteControl {
     private Command slot;
 
