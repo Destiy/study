@@ -1,6 +1,6 @@
 package strategy.duck.achieve;
 
-import strategy.duck.Duck;
+import strategy.duck.behavior.Duck;
 import strategy.duck.FlyRocketPowered;
 import strategy.duck.behavior.impl.FlyWithWings;
 import strategy.duck.behavior.impl.Quack;

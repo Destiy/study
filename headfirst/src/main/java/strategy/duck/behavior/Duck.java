@@ -1,4 +1,4 @@
-package strategy.duck;
+package strategy.duck.behavior;
 
 import strategy.duck.behavior.FlyBehavior;
 import strategy.duck.behavior.QuackBehavior;
