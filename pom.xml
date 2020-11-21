@@ -17,6 +17,7 @@
         <module>juc</module>
         <module>rocketmq</module>
         <module>headfirst</module>
+        <module>mycat</module>
     </modules>
 
     <dependencies>
