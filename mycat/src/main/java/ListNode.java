@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.SortedMap;
 
 /**
@@ -22,19 +23,21 @@ public class ListNode {
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        ListNode node4 = new ListNode(3);
-        ListNode node3 = new ListNode(1, node4);
-        ListNode node2 = new ListNode(2, node3);
-        ListNode head = new ListNode(4, node2);
-
-        solution.sortList(head);
+//        ListNode node4 = new ListNode(3);
+//        ListNode node3 = new ListNode(1, node4);
+//        ListNode node2 = new ListNode(2, node3);
+//        ListNode head = new ListNode(4, node2);
+//
+//        solution.sortList(head);
+        int[][] a = {{9,13},{1,10},{4,11},{8,12},{3,9},{6,9},{6,7}};
+        solution.findMinArrowShots(a);
     }
 }
 
 class Solution {
     public ListNode sortList(ListNode head) {
 //        return sort(head, null);
-        return  sort2(head);
+        return sort2(head);
     }
 
     public ListNode sort2(ListNode head) {
@@ -120,4 +123,27 @@ class Solution {
         }
         return tmpHeadNode.next;
     }
+
+    public int findMinArrowShots(int[][] points) {
+        if (points.length == 0) {
+            return 0;
+        }
+        int result = 0;
+        Arrays.sort(points, (o1, o2) -> o1[0] == o2[0] ? o1[1] - o2[1] : o1[0] - o2[0]);
+        for (int i = 0; i < points.length; i++) {
+            int p1 = points[i][0];
+            int p2 = points[i][1];
+            result++;
+            for (int j = i + 1; j < points.length; j++) {
+                if (p1 > points[j][0]  || points[j][0] > p2) {
+                    break;
+                }
+                p2 = Math.min(p2, points[j][1]);
+                i++;
+            }
+        }
+        return result;
+    }
+
+
 }
