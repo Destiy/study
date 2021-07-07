@@ -18,6 +18,8 @@
         <module>rocketmq</module>
         <module>headfirst</module>
         <module>mycat</module>
+        <module>mybatis-core</module>
+        <module>spring-core-practice</module>
     </modules>
 
     <dependencies>

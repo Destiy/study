@@ -1,5 +1,3 @@
-import lombok.experimental.var;
-
 import java.util.*;
 
 /**
@@ -8,177 +6,235 @@ import java.util.*;
  */
 public class Test {
     public static void main(String[] args) {
-        int a[][] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        int b[][] = {{5, 1, 9, 11}, {2, 4, 8, 10}, {13, 3, 6, 7}, {15, 14, 12, 16}};
         Test test = new Test();
-//        test.rotate2(b);
-//        System.out.println(b);
-//        System.out.println(test.minPatches(new int[]{1,2,31,33}, 2147483647));
-//        test.eraseOverlapIntervals(new int[][]{{1,2},{1,2},{1,2}});
-        List<List<String>> questions = new ArrayList<>();
-        questions.add(Arrays.asList("a", "b"));
-        questions.add(Arrays.asList("b", "c"));
 
-        List<List<String>> queries = new ArrayList<>();
-//        queries.add(Arrays.asList("a", "c"));
-//        queries.add(Arrays.asList("b", "a"));
-        queries.add(Arrays.asList("a", "e"));
-//        test.calcEquation(questions, new double[]{2.0,3.0}, queries);
-//        test.findCircleNum(new int[][]{{1,0,0,1},{0,1,1,0},{0,1,1,1},{1,0,1,1}});
-//        test.rotate(new int[]{1,2,3,4,5,6}, 4);
-//        test.maxProfit(new int[]{7,1,5,3,6,4});
-        test.smallestStringWithSwaps("dcab", Arrays.asList(Arrays.asList(0,3),Arrays.asList(1,2)));
+//        test.calculate("3+2*2");
+//        System.out.println(Integer.parseInt("+" + "3"));
+//        System.out.println(test.isValidSerialization("9,3,4,#,#,1,#,#,2,#,6,#,#"));
+
+
+//        System.out.println(test.singleNumber(new int[]{2,2,3,2}));
+//        test.testXOR();
+//        test.decode(new int[]{6,5,4,6});
+//        new ListNode()
+        test.merge(new int[]{4,5,6,0,0,0,0}, 3, new int[]{1,2,3,9},4);
     }
 
-    public void rotate(int[][] matrix) {
-        int length = matrix.length;
-        for (int i = 0; i < length / 2; i++) {
-            for (int j = i; j < length - i - 1; j++) {
-                int j1 = length - i - 1;
-                int swap = swap(matrix, j, j1, matrix[i][j]);
-                swap = swap(matrix, j1, length - j - 1, swap);
-                swap = swap(matrix, length - j - 1, i, swap);
-                swap(matrix, i, j, swap);
+    public int calculate(String s) {
+        Stack<Integer> stack = new Stack<>();
+        s += " ";
+        String symbol = "";
+        for (int i = 0; i < s.length(); i++) {
+            char ic = s.charAt(i);
+            if (ic == ' ') {
+                continue;
+            }
+            if (ic >= 48 && ic <= 57) {
+                for (int j = i; j < s.length(); j++) {
+                    char jc = s.charAt(j);
+                    if (jc < 48 || jc > 57) {
+                        String substring = s.substring(i, j);
+                        if (symbol.equals("*")) {
+                            Integer t = stack.pop();
+                            stack.push(t * Integer.parseInt(substring));
+                        } else if (symbol.equals("/")) {
+                            Integer t = stack.pop();
+                            stack.push(t / Integer.parseInt(substring));
+                        } else {
+                            stack.push(Integer.parseInt(symbol + substring));
+                        }
+                        i = j - 1;
+                        break;
+                    }
+                }
+            } else {
+                symbol = ic + "";
             }
         }
+        while (stack.size() != 1) {
+            Integer n1 = stack.pop();
+            Integer n2 = stack.pop();
+            stack.push(n1 + n2);
+        }
+        return stack.pop();
     }
 
-    public int swap(int[][] matrix, int i, int j, int v) {
-        int t = matrix[i][j];
-        matrix[i][j] = v;
-        return t;
-    }
-
-    public void rotate2(int[][] matrix) {
-        int length = matrix.length;
-        for (int i = 0; i < length / 2; i++) {
-            int j1 = length - i - 1;
-            for (int j = i; j < j1; j++) {
-                int temp = matrix[i][j];
-                int end = length - j - 1;
-                matrix[i][j] = matrix[end][i];      // 左下->左上
-                matrix[end][i] = matrix[j1][end];   // 右下->左下
-                matrix[j1][end] = matrix[j][j1];    // 右上->右下
-                matrix[j][j1] = temp;               // 左上->右上
+    public boolean isValidSerialization(String preorder) {
+        int length = preorder.length();
+        int i = 0;
+        int cnt = 1;
+        while (i < length) {
+            if (cnt == 0) {
+                return false;
+            }
+            if (preorder.charAt(i) == ',') {
+                i++;
+            } else if (preorder.charAt(i) == '#') {
+                cnt--;
+                i++;
+            } else {
+                while (i < length && preorder.charAt(i) != ',') {
+                    i++;
+                }
+                cnt++;
             }
         }
+        return cnt == 0;
     }
 
+    public boolean judgeSquareSum(int c) {
+        for (int i = 2; i * i <= c; i++) {
+            if (c % i != 0) {
+                continue;
+            }
+            int exp = 0;
+            while (c % i == 0) {
+                exp++;
+                c /= i;
+            }
 
-    public int findCircleNum(int[][] isConnected) {
-        int length = isConnected.length;
-        if (length == 0) {
-            return 0;
+            if (i % 4 == 3 && exp % 2 != 0) {
+                return false;
+            }
         }
-        // 并查集版本
-        int[] parent = new int[length];
-        for (int i = 0; i < length; i++) {
-            parent[i] = i;
+        return c % 4 != 3;
+    }
+
+    public boolean canCross(int[] stones) {
+        int n = stones.length;
+        boolean[][] dp = new boolean[n][n];
+        dp[0][0] = true;
+        for (int i = 1; i < n; ++i) {
+            if (stones[i] - stones[i - 1] > i) {
+                return false;
+            }
         }
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < length; j++) {
-                if (isConnected[i][j] == 1) {
-                    union(parent, i, j);
+        for (int i = 1; i < n; ++i) {
+            for (int j = i - 1; j >= 0; --j) {
+                int k = stones[i] - stones[j];
+                if (k > j + 1) {
+                    break;
+                }
+                dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];
+                if (i == n - 1 && dp[i][k]) {
+                    return true;
                 }
             }
         }
-        int res = 0;
-        for (int i = 0; i < length; i++) {
-            if (parent[i] == i) {
-                res++;
-            }
+        return false;
+    }
+
+
+    public int singleNumber(int[] nums) {
+
+        int one = 0, two = 0, three;
+        for (int num : nums) {
+            // two的相应的位等于1，表示该位出现2次
+            two |= (one & num);
+            // one的相应的位等于1，表示该位出现1次
+            one ^= num;
+            // three的相应的位等于1，表示该位出现3次
+            three = (one & two);
+            // 如果相应的位出现3次，则该位重置为0
+            two &= ~three;
+            one &= ~three;
+        }
+        return one;
+    }
+
+    public void testXOR() {
+        int res = 1;
+        for (int i = 3; i < 99; i += 2) {
+            res = res ^ i ^ (i - 1);
+            System.out.println("i = " + i + ", " + res + ", mod = " + (i + 1) / 2);
+        }
+    }
+
+    public int[] decode(int[] encoded) {
+        Arrays.sort(encoded);
+        int n = encoded.length + 1;
+        int[] res = new int[n];
+        int tmp = ((n + 1) / 2) % 2;
+        for (int i = 1; i < n - 1; i += 2) {
+            tmp ^= encoded[i];
+        }
+        res[0] = tmp;
+        for (int i = 1; i < n; i++) {
+            res[i] = encoded[i - 1] ^ res[i - 1];
         }
         return res;
     }
 
-    public void union(int[] parent, int i, int j) {
-        parent[find(parent, i)] = find(parent, j);
+    public void exchangeNums(int a, int b) {
+        b = a ^ b;
+        a = a ^ b;
+        b = a ^ b;
+        System.out.println(a + " " + b);
     }
 
-    public int find(int[] parent, int i) {
-        if (parent[i] != i) {
-            parent[i] = find(parent, parent[i]);
+
+
+     class ListNode {
+       int val;
+       ListNode next = null;
+
+         public ListNode(int val) {
+             this.val = val;
+         }
+     }
+
+    public ListNode reverseKGroup (ListNode head, int k) {
+        // write code here
+        ListNode result = new ListNode(0);
+        result.next = head;
+        ListNode cur = result.next;
+
+        while (k > 1) {
+            k--;
+            ListNode next = cur.next;
+            ListNode next2 = next.next;
+            cur.next = next2;
+            next.next = cur;
+            result.next = next;
+            cur = cur.next;
+
         }
-        return parent[i];
+        return result.next;
     }
 
-    public void rotate(int[] nums, int k) {
-        int length = nums.length;
-        if (length < 2 || k < 1) { return; }
-        k = k % length;
-        if (k < 1) {
-            return;
-        }
-        boolean[] falgNums = new boolean[nums.length];
-        int size = 0, tmp = nums[0], cnt = 0;
-        while(size++ < length) {
-            cnt = cnt + k < length ? cnt + k : cnt + k - length;
-
-            int num = nums[cnt];
-            nums[cnt] = tmp;
-            tmp = num;
-            falgNums[cnt] = true;
-            int t = cnt + k < length ? cnt + k : cnt + k - length;
-            while (size < length && falgNums[t]) {
-                tmp = nums[++cnt];
-                t = cnt + k < length ? cnt + k : cnt + k - length;
+    public int maxLength (int[] arr) {
+        // write code here
+        int start = 0, res = 0;
+        int[] tmp = new int[100005];
+        for (int i = 0; i < arr.length; i++) {
+            int t = arr[i];
+            if (tmp[t] > start) {
+                start = tmp[t];
             }
-        }
-    }
-
-    public int maxProfit(int[] prices) {
-        int res = 0;
-        for (int i = 0; i < prices.length; i++) {
-            int j = i + 1, tmp = prices[i];
-            while (j < prices.length && prices[j-1] < prices[j]) {
-                tmp = prices[j];
-                j++;
-            }
-            res += Math.max(0,tmp - prices[i]);
-            i = j - 1;
+            res = Math.max(res, i - start + 1);
+            tmp[t] = i + 1;
         }
         return res;
     }
 
-    public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
-        if (pairs.size() == 0) { return s;}
-        int length = s.length();
-        Set<Integer> treeSet = new TreeSet<>();
-        Set<String> tempSet = new TreeSet<>();
-        StringBuilder res = new StringBuilder();
-        for (List<Integer> pair : pairs) {
-            Integer x1 = pair.get(0);
-            Integer x2 = pair.get(1);
-            tempSet.add(s.substring(x1, x1+1));
-            tempSet.add(s.substring(x2, x2+1));
-            treeSet.add(x1);
-            treeSet.add(x2);
-        }
-        Integer[] index = treeSet.toArray(new Integer[0]);
-        String[] indexValue = tempSet.toArray(new String[0]);
-        for (int i = 0, j = 0; i < length && j < index.length; i++) {
-            if (i < index[j]) {
-                res.append(s, i, index[j]);
-                res.append(indexValue[j]);
-                i = j++;
+    public void merge(int A[], int m, int B[], int n) {
+        int ai = m - 1, bi = n - 1, li = m + n - 1;
+        while (ai >= 0 && bi >= 0) {
+            if (A[ai] > B[bi]) {
+                A[li--] = A[ai--];
             } else {
-                res.append(indexValue[j++]);
+                A[li--] = B[bi--];
             }
         }
-        return res.toString();
-    }
-    public List<Integer> addToArrayForm(int[] A, int K) {
-        ArrayList<Integer> res = new ArrayList<>();
-        StringBuilder tmp = new StringBuilder(A.length);
-        for (int i : A) {
-            tmp.append(i);
+        while(bi >= 0) {
+            A[li--] = B[bi--];
         }
-        int resValue = Integer.parseInt(tmp.toString()) + K;
-        while (resValue != 0){
-            res.add(resValue % 10);
-            resValue /= 10;
-        }
-        Collections.reverse(res);
-        return res;
+        Stack<String> st = new Stack<>();
+        char c = '2';
+        String pop = st.pop();
+        st.push(c + "");
+
+        List<Integer> list = new ArrayList<>();
     }
+
 }
